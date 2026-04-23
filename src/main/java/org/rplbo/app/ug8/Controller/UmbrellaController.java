@@ -38,9 +38,10 @@ public class UmbrellaController implements Initializable {
         // ==============================================================================
 
         // --- TULIS KODE ANDA DI BAWAH INI ---
-
-
-
+        colName.setCellValueFactory(new PropertyValueFactory<>("itemName"));
+        colInitial.setCellValueFactory(new PropertyValueFactory<>("initialStock"));
+        colSupply.setCellValueFactory(new PropertyValueFactory<>("supplyStock"));
+        colFinal.setCellValueFactory(new PropertyValueFactory<>("finalStock"));
 
         // ==============================================================================
         // TODO 2: LISTENER KLIK BARIS TABEL (SELECTION MODEL)
@@ -58,9 +59,11 @@ public class UmbrellaController implements Initializable {
         tableInventory.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 // --- TULIS KODE ANDA DI BAWAH INI ---
-
-
-
+                selectedItem = newVal;
+            txtInitial.setText(String.valueOf(newVal.getInitialStock()));
+            txtItem.setText(newVal.getItemName());
+            txtSupply.setText(String.valueOf(newVal.getNewSupply()));
+            txtItem.setEditable(false);
             }
         });
 
@@ -82,7 +85,17 @@ public class UmbrellaController implements Initializable {
         //    - refreshTable()
         //    - clearFields()
         // ==============================================================================
+        if(selectedItem != null) {
+            int initial = Integer.parseInt(txtInitial.getText());
+            int supply = Integer.parseInt(txtSupply.getText());
+            int final_stock =  initial + supply;
+            InventoryItem newItem = new InventoryItem(selectedItem.getItemName(), initial, supply, final_stock);
 
+            if (db.updateItem(newItem)){
+                refreshTable();
+                clearFields();
+            }
+        }
         // --- TULIS KODE ANDA DI BAWAH INI ---
 
 
@@ -103,8 +116,13 @@ public class UmbrellaController implements Initializable {
         // ==============================================================================
 
         // --- TULIS KODE ANDA DI BAWAH INI ---
-
-
+        int initial = Integer.parseInt(txtInitial.getText());
+        int supply = Integer.parseInt(txtSupply.getText());
+        int final_stock =  initial + supply;
+        InventoryItem newItem = new InventoryItem(txtItem.getText(), initial, supply, final_stock);
+        db.addItem(newItem);
+        clearFields();
+        refreshTable();
     }
 
     @FXML
@@ -123,7 +141,24 @@ public class UmbrellaController implements Initializable {
         // ==============================================================================
 
         // --- TULIS KODE ANDA DI BAWAH INI ---
-
+        Alert a;
+        if (selectedItem != null) {
+            a = new Alert(Alert.AlertType.CONFIRMATION);
+            a.setTitle("Confirmation");
+            a.setHeaderText("beneran bang?");
+            a.setContentText("Are you sure you want to delete this item?");
+            a.showAndWait();
+            db.deleteItem(selectedItem.getItemName());
+            masterData.clear();
+            clearFields();
+            refreshTable();
+        }else{
+            a = new Alert(Alert.AlertType.WARNING);
+            a.setTitle("Warning");
+            a.setHeaderText("beneran bang?");
+            a.setContentText("Pilih dulu woe");
+            a.showAndWait();
+        }
 
     }
 

@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <!--Buatlah Semirip mungkin, bebas asalkan jalan-->
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.rplbo.app.ug8.Controller.LoginController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane fx:id="btnLogin" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.rplbo.app.ug8.Controller.LoginController">
+   <children>
+      <Label layoutX="176.0" layoutY="76.0" text="UMBRELLA CORP - SECTOR B">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="169.0" layoutY="139.0" text="OPERATIVE ID:" />
+      <TextField fx:id="txtUsername" layoutX="166.0" layoutY="164.0" prefHeight="26.0" prefWidth="275.0" />
+      <Label layoutX="169.0" layoutY="200.0" prefHeight="18.0" prefWidth="64.0" text="PASSCODE" />
+      <PasswordField fx:id="txtPassword" layoutX="166.0" layoutY="218.0" prefHeight="26.0" prefWidth="275.0" />
+      <Button id="SubmitBtn" layoutX="166.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="26.0" prefWidth="275.0" text="AUTHENTICATE" />
+      <Label fx:id="lblStatus" layoutX="176.0" layoutY="112.0" textFill="#ef0000" />
+   </children>
 </AnchorPane>
